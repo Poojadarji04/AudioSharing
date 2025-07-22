@@ -45,7 +45,7 @@ export const useSetting = () => {
 
   const confirmLogout = useCallback(() => {
     Alert.alert(
-      'Confirm Logout',
+      'Logout',
       'Are you sure you want to logout?',
       [
         {
