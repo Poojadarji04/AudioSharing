@@ -8,6 +8,7 @@ import APIManager from '../../../api/APIManager';
  * Hook to fetch and manage user notifications
  */
 export const useNotifications = () => {
+  
   const navigation = useNavigation();
   const [notifications, setNotifications] = useState<any[]>([]);
 
