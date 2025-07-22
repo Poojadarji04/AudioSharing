@@ -1,0 +1,6 @@
+module Pods_AudioSharing {
+  umbrella header "Pods-AudioSharing-umbrella.h"
+
+  export *
+  module * { export * }
+}

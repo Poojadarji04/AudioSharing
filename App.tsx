@@ -1,28 +1,42 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+// App.tsx
+import React, { useEffect, useState } from 'react';
+import BootSplash from 'react-native-bootsplash';
+import MainNavigation from './src/navigators/MainNavigation';
+import { StorageKeys, StorageManager } from './src/managers/StorageManager';
+import FlashMessage from 'react-native-flash-message';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+const App = () => {
+  const [initialRoute, setInitialRoute] = useState<string>(''); // <- changed from null to ''
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      try {
+        const isLoggedIn = StorageManager.getItem<boolean>(
+          StorageKeys.IS_USER_LOGGED_IN,
+        );
+        setInitialRoute(isLoggedIn ? 'BottomTabView' : 'SignUp');
+      } catch (err) {
+        console.error('Error checking login:', err);
+        setInitialRoute('SignUp');
+      }
+    };
 
+    checkLoginStatus();
+  }, []);
+
+  useEffect(() => {
+    if (initialRoute !== '') {
+      BootSplash.hide();
+    }
+  }, [initialRoute]);
+
+  if (initialRoute === '') return null;
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <NewAppScreen templateFileName="App.tsx" />
-    </View>
+    <>
+      <MainNavigation initialRoute={initialRoute} />
+      <FlashMessage position={'top'} />
+    </>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+};
 
 export default App;
