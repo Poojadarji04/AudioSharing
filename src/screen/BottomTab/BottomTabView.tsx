@@ -1,3 +1,5 @@
+// BottomTabView.tsx
+
 import React from 'react';
 import { Dimensions, Image, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
